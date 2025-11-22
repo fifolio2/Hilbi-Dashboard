@@ -15,8 +15,13 @@ const BaseLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     () => [
       {
         key: '/',
-        label: <Link to="/">Dashboard</Link>,
+        label: <Link to="/">Home</Link>,
         icon: <HomeOutlined />,
+      },
+      {
+        key: '/users/list',
+        label: <Link to="/users/list">Users list</Link>,
+        icon: <UserOutlined />,
       },
     ],
     [],
@@ -38,10 +43,7 @@ const BaseLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           className={classes['app-menu']}
           selectedKeys={[last]}
         />
-        <div className="tw:text-white tw:ml-4">
-          <UserOutlined className="tw:mr-2" />
-          John Doe
-        </div>
+        <div className="tw:text-white tw:ml-4">John Doe</div>
       </Layout.Header>
       <Layout.Content>{children}</Layout.Content>
     </Layout>
