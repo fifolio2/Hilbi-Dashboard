@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import UserDetails from "./UserDetails";
 import { useEffect, useState } from "react";
 import { fetchLastActiveUsers } from "@/services";
+import { Spin } from "antd";
 
 export default function LastActiveUsersSection() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -10,9 +11,11 @@ export default function LastActiveUsersSection() {
 
   useEffect(() => {
     const loadUsers = async () => {
+      // delay 2 seconds to simulate API latency
+    await new Promise((resolve) => setTimeout(resolve, 2000));
       const users = await fetchLastActiveUsers();
       setLastActiveUsers(users || []);
-      setLoading(true);
+      setLoading(false);
     };
 
     loadUsers();
@@ -34,7 +37,9 @@ export default function LastActiveUsersSection() {
 
       <div className="tw:h-[448px] tw:overflow-y-auto">
         {loading ? (
-          <Spain>Loading...</span>
+          <center className="tw:h-full tw:flex tw:items-center tw:justify-center">
+            <Spin size="large"/>
+          </center>
         ) : (
           lastActiveUsers.map((user) => (
             <UserDetails key={user.id} data={user} />
