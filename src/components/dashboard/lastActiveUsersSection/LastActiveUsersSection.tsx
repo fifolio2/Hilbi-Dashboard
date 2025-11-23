@@ -40,7 +40,7 @@ export default function LastActiveUsersSection() {
           <center className="tw:h-full tw:flex tw:items-center tw:justify-center">
             <Spin size="large" />
           </center>
-        ) : lastActiveUsers && lastActiveUsers.length < 0 ? (
+        ) : lastActiveUsers && lastActiveUsers.length > 0 ? (
           lastActiveUsers.map((user) => (
             <UserDetails key={user.id} data={user} />
           ))
