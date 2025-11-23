@@ -12,7 +12,7 @@ export default function LastActiveUsersSection() {
   useEffect(() => {
     const loadUsers = async () => {
       // delay 2 seconds to simulate API latency
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       const users = await fetchLastActiveUsers();
       setLastActiveUsers(users || []);
       setLoading(false);
@@ -38,12 +38,16 @@ export default function LastActiveUsersSection() {
       <div className="tw:h-[448px] tw:overflow-y-auto">
         {loading ? (
           <center className="tw:h-full tw:flex tw:items-center tw:justify-center">
-            <Spin size="large"/>
+            <Spin size="large" />
           </center>
-        ) : (
+        ) : lastActiveUsers && lastActiveUsers.length < 0 ? (
           lastActiveUsers.map((user) => (
             <UserDetails key={user.id} data={user} />
           ))
+        ) : (
+          <center className="tw:h-full tw:flex tw:items-center tw:justify-center">
+            <span className="tw:text-gray-500 tw:italic">No users found.</span>
+          </center>
         )}
       </div>
     </div>

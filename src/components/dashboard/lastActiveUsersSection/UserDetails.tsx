@@ -1,3 +1,4 @@
+import { formatDate } from "@/helpers";
 import type { User } from "@/interfaces";
 
 interface UserDetailsProps {
@@ -26,7 +27,7 @@ export default function UserDetails({ data }: UserDetailsProps) {
 
       {/* LAST ACTIVE DATE */}
       <div className="tw:text-[14px] tw:text-gray-500">
-        {new Date(data.updatedAt).toLocaleDateString()}
+        {formatDate(data.updatedAt)}
       </div>
     </div>
   );

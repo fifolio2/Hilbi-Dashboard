@@ -9,9 +9,8 @@ export async function fetchLastActiveUsers() {
     }
 
     const data = await res.json()
-    console.log('The Last active users data:', data)
 
-    return data.users || null
+    return data.items || null
   } catch (error) {
     console.error('Error in fetchLastActiveUsers:', error)
     return null
