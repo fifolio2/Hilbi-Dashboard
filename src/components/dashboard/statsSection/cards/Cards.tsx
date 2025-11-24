@@ -16,16 +16,13 @@ export default function Cards({ cardStructure }: CardsProps) {
 
   useEffect(() => {
     const loadUsers = async () => {
-      // delay 2 seconds to simulate API latency
-      await new Promise((resolve) => setTimeout(resolve, 2000));
 
       const totalUsers = await fetchTotalUsers();
-      setTotalUsers(totalUsers);
-
       const activeUsers = await fetchTotalActiveUsers();
+      const InactiveUsers = await fetchTotalInactiveUsers();      
+      
+      setTotalUsers(totalUsers);
       setActiveUsers(activeUsers);
-
-      const InactiveUsers = await fetchTotalInactiveUsers();
       setInactiveUsers(InactiveUsers);
 
       setLoading(false);
