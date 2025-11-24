@@ -1,10 +1,39 @@
 import type { CardStructure } from '@/interfaces'
+import { fetchTotalActiveUsers, fetchTotalInactiveUsers, fetchTotalUsers } from '@/services';
+import { Spin } from 'antd';
+import { useEffect, useState } from 'react';
 
 type CardsProps = {
   cardStructure: CardStructure
 }
 
 export default function Cards({ cardStructure }: CardsProps) {
+
+  const [loading, setLoading] = useState<boolean>(true);
+  const [totalUsers, setTotalUsers] = useState<number | null>(null);
+  const [activeUsers, setActiveUsers] = useState<number | null>(null);
+  const [InactiveUsers, setInactiveUsers] = useState<number | null>(null);
+
+  useEffect(() => {
+    const loadUsers = async () => {
+      // delay 2 seconds to simulate API latency
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      const totalUsers = await fetchTotalUsers();
+      setTotalUsers(totalUsers);
+
+      const activeUsers = await fetchTotalActiveUsers();
+      setActiveUsers(activeUsers);
+
+      const InactiveUsers = await fetchTotalInactiveUsers();
+      setInactiveUsers(InactiveUsers);
+
+      setLoading(false);
+    };
+
+    loadUsers();
+  }, []);
+
   return (
     <div className="tw:w-full tw:h-[118px] tw:rounded-xl tw:py-3 tw:bg-white tw:border tw:border-gray-200 tw:space-y-2 tw:text-black">
       <div className="tw:px-3 tw:flex tw:justify-between tw:items-center">
@@ -13,7 +42,14 @@ export default function Cards({ cardStructure }: CardsProps) {
       </div>
       <hr className="tw:text-gray-200" />
       <div className="tw:px-3 tw:mt-3">
-        <h2 className="tw:text-[24px] tw:!font-semibold">123</h2>
+        <h2 className="tw:text-[24px] tw:!font-semibold">
+          {loading ?
+            <Spin size="small" /> :
+            cardStructure.title === 'Total users' ? totalUsers :
+              cardStructure.title === 'Active users' ? activeUsers :
+                cardStructure.title === 'Inactive users' ? InactiveUsers :
+                  null}
+        </h2>
         <h6 className="tw:text-gray-500 tw:text-[12px]">
           {cardStructure.description}
         </h6>
